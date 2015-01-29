@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+<head>
+    <title>{% block title %}Contact us{% endblock %}</title>
+	{% block style %}
+		<link href="{% static 'css/main.css' %}" rel="stylesheet">
+	{% endblock %}
+</head>
+<body>
+{% block content %}
+<section id="contact">
+        <div class="container">
+            <div class="box last">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Contacter nous</h1>
+                        <p>Pour ajouter des evennements d'election veillez nous contacter</p>
+			<hr class="colorgraph">
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="/contact/" role="form">
+					{% csrf_token %}
+                                        {% for form1 in form.hidden_fields %}
+               					 {{ form1 }}
+            				{% endfor %}
+
+
+            				{% for form1 in form.visible_fields %}
+                				<div class="col-xs-6 col-sm-6 col-md-6">
+                    				<div class="form-group">
+                        			{% with "placeholder : "|add:form1.name as name %}
+                            				{{ form1|add_class:'form-control input-lg'|attr:name }}</div>
+                        			{% endwith %}
+                    				</div>
+            				{% endfor %}
+					<div class="col-xs-6 col-sm-6 col-md-6">
+					<div class="form-group">
+                                        <button type="submit" class="btn btn-danger btn-lg">Send Message</button>
+                                    	</div>
+					</div>
+                        </form>
+                    </div><!--/.col-sm-6-->
+                    <div class="col-sm-6">
+                        <h1>Our Address</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <address>
+                                    <strong>Twitter, Inc.</strong><br>
+                                    795 Folsom Ave, Suite 600<br>
+                                    San Francisco, CA 94107<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>
+                            </div>
+                            <div class="col-md-6">
+                                <address>
+                                    <strong>Twitter, Inc.</strong><br>
+                                    795 Folsom Ave, Suite 600<br>
+                                    San Francisco, CA 94107<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>
+                            </div>
+                        </div>
+                        <h1>Connect with us</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="social">
+                                    <li><a href="#"><i class="icon-facebook icon-social"></i> Facebook</a></li>
+                                    <li><a href="#"><i class="icon-google-plus icon-social"></i> Google Plus</a></li>
+                                    <li><a href="#"><i class="icon-pinterest icon-social"></i> Pinterest</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="social">
+                                    <li><a href="#"><i class="icon-linkedin icon-social"></i> Linkedin</a></li>
+                                    <li><a href="#"><i class="icon-twitter icon-social"></i> Twitter</a></li>
+                                    <li><a href="#"><i class="icon-youtube icon-social"></i> Youtube</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!--/.col-sm-6-->
+                </div><!--/.row-->
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#contact-->
+
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

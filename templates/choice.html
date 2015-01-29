@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+{% extends 'base.html' %}
+{% load static %}
+{% load comments %}
+{% load widget_tweaks %}
+<head>
+    <title></title>
+    {% block style %}
+        <link href="{% static 'css/style2.css' %}">
+    {% endblock %}
+</head>
+<body>
+ {% block content %}
+	{% if condidats	%}
+        <h1>list of condidates</h1>
+    <div class="carousel slide" id="myCarousel">
+        <div class="carousel-inner">
+{% for candidate in condidats %}
+
+	{% if  forloop.counter|divisibleby:5 or forloop.first %}
+            <div class="item {% if forloop.first %}active{% endif %}">
+                    <ul class="thumbnails">
+	{% endif %}
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="#"><img src="{% if candidate.picture %}{{ candidate.picture.url }}{% endif %}" alt=""></a>
+                            </div>
+                            <div class="caption">
+                                <h4>{{ candidate.first_name }} {{ candidate.last_name }}</h4>
+                				<p>{{ candidate.job }}</p>
+                                <a class="btn btn-mini" href="/profil/{{ candidate.id }}/">&raquo; Read More</a>
+                                {% if user.is_authenticated %}
+                                    {% if not voted and not date %}
+                                        <a class="btn btn-danger" href="/vote/{{ candidate.user.username }}/">Vote</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </li>
+    {%  if forloop.counter == 4 %}
+        </ul>
+        </div>
+    {% endif %}
+	{% if  forloop.last %}
+                    </ul>
+        </div>
+	{% endif %}
+{% endfor %}
+    </div>
+        <div class="control-box">
+            <a data-slide="prev" href="#myCarousel" class="carousel-control left">‹</a>
+            <a data-slide="next" href="#myCarousel" class="carousel-control right">›</a>
+        </div><!-- /.control-box -->
+
+    </div><!-- /#myCarousel -->
+        {% get_comment_list for event as comment_list %}
+
+	<!-- comments section -->
+	{% for comment in comment_list %}
+	<div class="list-group-item">
+	  <p><b class="text-primary">{{ comment.user|escape }}</b>
+	   <span class="text-info">commented, on {{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"P" }}:</span></p>
+	  <span class="text-left">{{ comment.comment|escape|urlizetrunc:40|linebreaks }}</span>
+			</div>
+	{% endfor %}
+	<!-- comments list end - start comment form -->
+	{% if user.is_authenticated %}
+{% get_comment_form for event as comment_form %}
+    <form method="post" action="{% comment_form_target %}">
+    {% csrf_token %}
+        {% for field in comment_form %}
+           {% if field.name != 'email' and field.name != 'url' and field.name != "name" and field.name != 'honeypot' and field.name != "next" %}
+              <div class="form-group">
+                {% with "placeholder : "|add:field.name as name %}
+                    {{field|add_class:'form-control input-lg'|attr:name}}
+                {% endwith %}
+              </div>
+           {% endif %}
+
+
+        {% endfor %}
+
+    <input name="next" type="hidden" value="{{ request.path }}" />
+    <input type="hidden" name="name" value="foo" />
+    <input type="hidden" name="email" value="foo@foo.foo" />
+    <input type="hidden" name="url" value="http://www.foofoo.com" />
+    <input  type="submit" name="post" class="btn btn-success" value="Post">
+    </form>
+	{% endif %}
+	<!-- end comment form -->
+	{% else %}
+        	<h2> no condidates registred yet  </h2>
+	{% endif %}
+	{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+</body>
+</html>

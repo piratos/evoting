@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% for condidat in condidats %}
+<p>{{ forloop.counter}} .. {{ condidat.user.username }} has {{ condidat.pourcentage }}% </p>
+{% endfor %}
+</body>
+</html>

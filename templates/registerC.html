@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block style %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link href="{% static 'css/datepicker.min.css' %}" rel="stylesheet">
+    {% if register %}<style>
+        #menu_bleu{
+            position: inherit;
+        }
+    </style>{% endif %}
+{% endblock %}
+    <body>
+{% block content %}
+        <h1>Register to Vote</h1>
+        {% if register and date %}
+        <strong>you completed the registration but the event is closed for now although you can vote ;)</strong>
+        <a href="/">Return to the homepage.</a><br />
+        {% elif register and not date %}
+        <strong>thank you for your registration as a candidate !<br> wait for the admin to approve your candidature
+        <br> you will recieve a mail </strong>
+        {% else %}
+<div class="jg-modal-rrect">
+    <div class="modal-dialog "><div class="modal-content" ng-transclude="">
+            <div class="modal-header ng-scope">
+                <h3>register as candidate</h3>
+            <hr class="colorgraph">
+            </div>
+            <div class="modal-body ng-scope">
+
+<div class="jg-modal-body-content">
+
+        <form id="user_form" method="post" action="/registerC/"
+                enctype="multipart/form-data">
+            <div class="form-group">
+
+            {% csrf_token %}
+
+            {{ user_form.errors }}
+            {{ profile_form.errors }}
+            {% for form in user_form.hidden_fields %}
+                {{ form }}
+            {% endfor %}
+
+
+            {% for form in user_form.visible_fields %}
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        {% with "placeholder : "|add:form.name as name %}
+                            {{ form|add_class:'form-control input-lg'|attr:name }}</div>
+                        {% endwith %}
+                    </div>
+            {% endfor %}
+
+
+            {% for form1 in profile_form.hidden_fields %}
+                {{ form1 }}
+            {% endfor %}
+
+
+            {% for form1 in profile_form.visible_fields %}
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        {% with "placeholder : "|add:form1.name as name %}
+                            {{ form1|add_class:'form-control input-lg'|attr:name }}</div>
+                        {% endwith %}
+                    </div>
+            {% endfor %}
+            <hr class="colorgraph">
+				<div class="col-xs-6 col-md-6"><input type="submit" value="Register" class="btn btn-primary  " tabindex="7"></div>
+        </div></form>
+        {% endif %}
+    <br/>
+</div>
+    </div>
+        </div>
+            </div>
+                </div>
+                    </div>
+{% endblock %}
+{%  block scripts %}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script>
+            $(document).ready(function () {
+
+                $('#id_age').datepicker({
+                    format: "yyyy-mm-dd"
+                });
+
+            });
+    </script>
+{% endblock %}
+</body>
+</html>

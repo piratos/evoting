@@ -1,0 +1,87 @@
+
+html, body {
+padding: 0;
+margin: 0;
+height: 100%;
+width:100%;
+background: #3f3f3f;
+}
+
+.navbar-brand {
+background: url(../../base/img/navbar-logo.png);
+background-repeat: no-repeat;
+width: 94px;
+height: 29px;
+text-indent: -9000px;
+margin:10px 15px 0 15px;
+overflow: hidden;
+}
+
+.jg-navbar {
+border-radius: 0px;
+}
+.jg-navbar-secondary  {
+background: #fff;
+}
+
+.navbar {
+margin-bottom: 0;
+border: none;
+}
+
+.jg-scrollable {
+-webkit-overflow-scrolling: touch;
+}
+
+.jg-modal-rrect .modal-content {
+border-top-left-radius: 40px;
+border-bottom-left-radius: 0;
+border-top-right-radius: 0;
+border-bottom-right-radius: 40px;
+}
+
+
+.jg-modal-ball .modal-content {
+left:0;right:0;top:0;bottom:0;margin:auto;width:500px;height:500px;
+border-radius:50%;
+background:#fff;
+animation: wobble 3s infinite;
+-webkit-animation: wobble 3s infinite;
+}
+
+    @keyframes wobble {
+      0% { border-radius:50% 52%; }
+      20% { border-radius:52% 50%; }
+      40% { border-radius:50% 52%; }
+      100% { border-radius:50% 52%; }
+    }
+    @-webkit-keyframes wobble {
+      0% { border-radius:50% 52%; }
+      20% { border-radius:52% 50%; }
+      40% { border-radius:50% 52%; }
+      100% { border-radius:50% 52%; }
+    }
+
+.jg-modal-ball .modal-body {
+position:absolute;
+padding: 0;
+width: 70%;height: 70%;left:15%;top:15%;
+}
+.jg-modal-ball .modal-header {
+border-bottom: none;
+text-align: center;
+}
+.jg-modal-ball .modal-footer {
+border-top: none;
+text-align: center;
+position:absolute;
+width: 100%;left:0;top:82%;
+}
+
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}

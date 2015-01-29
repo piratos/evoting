@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+{% extends 'base.html' %}
+<head>
+    <title>{% block title %}Voting...{% endblock %}</title>
+    {% block style %}
+        #menu_bleu{
+            position: inherit;
+        }
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+{% if erreur %}
+<p> erreur </p>
+{% endif %}
+{% if not voted %}
+<h2 class="text-center"> you already voted {{ user.username }} !!</h2>
+{% else %}
+        <h2 class="text-center text-primary">
+    thank you for voting<br>
+    the vote for {{ condidate.first_name }} {{ condidate.last_name }} has been considered
+    you can return to the <a href="/">home</a> page and see other awesomes voting event
+    </h2>
+{% endif %}
+{% endblock %}
+</body>
+</html>
